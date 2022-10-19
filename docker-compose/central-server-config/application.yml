@@ -22,5 +22,5 @@ pring:
             issuer-uri: https://dev-72261972.okta.com/oauth2/default
         registration:
           oidc:
-            client-id: ${OIDC_CLIENT_ID}
-            client-secret: ${OIDC_CLIENT_SECRET}
+            client-id: 0oa6wrdmyeR6YVRBx5d7
+            client-secret: VA0omGf-ylwJMR_tRx7qrwoQKWTsLciO52t1_i18
