@@ -2,6 +2,7 @@ package com.okta.developer.store.web.rest;
 
 import com.okta.developer.store.domain.Store;
 import com.okta.developer.store.repository.StoreRepository;
+import com.okta.developer.store.service.AlertService;
 import com.okta.developer.store.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -33,10 +34,13 @@ public class StoreResource {
     private String applicationName;
 
     private final StoreRepository storeRepository;
+    private final AlertService alertService;
 
-    public StoreResource(StoreRepository storeRepository) {
+    public StoreResource(StoreRepository storeRepository, AlertService alertService) {
         this.storeRepository = storeRepository;
+        this.alertService = alertService;
     }
+
 
     /**
      * {@code POST  /stores} : Create a new store.
@@ -86,6 +90,8 @@ public class StoreResource {
         }
 
         Store result = storeRepository.save(store);
+        log.debug("SEND store alert for Store: {}", store);
+        alertService.alertStoreStatus(result);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, store.getId()))
